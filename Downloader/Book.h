@@ -12,4 +12,7 @@
 @interface Book : Downloader
 @property (nonatomic, retain) NSString *bookID;
 @property (nonatomic, retain) NSString *bookName;
+
+- (Book *)getReady;
+
 @end

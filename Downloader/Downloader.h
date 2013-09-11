@@ -52,6 +52,7 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 @property (readonly, nonatomic, assign) long long totalBytesRead;
 @property (readonly, nonatomic, assign) long long totalBytes;
 @property (nonatomic, assign) TaskState taskState; // 用于设置downloader正在进行的状态，内部不做调用
+@property (readonly, nonatomic, retain) NSURL *url;
 
 + (id)downloaderWithURL:(NSURL *)url tempPath:(NSString *)tempPath;
 /**
@@ -67,7 +68,8 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 - (void)resume;
 - (void)cancel;
 // added by ljy 9/11/2013
-- (void)getReady;
+// 必要的时候需要子类重载
+- (Downloader *)getReady;
 
 #if NS_BLOCKS_AVAILABLE
 @property (nonatomic, copy) DownloaderDidReceiveResponseBlock receiveResponseBlock;

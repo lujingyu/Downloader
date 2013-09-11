@@ -16,4 +16,11 @@
     [super dealloc];
 }
 
+- (Book *)getReady {
+    Book *book = (Book *)[super getReady];
+    book.bookID = self.bookID;
+    book.bookName = self.bookName;
+    return book;
+}
+
 @end

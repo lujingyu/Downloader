@@ -90,6 +90,9 @@ static TDownloadManager *instance = nil;
     else if (downloader.taskState == TaskStateCancelling) {
         [self postNotification:TDownloaderDidCancelTaskNotification object:downloader userInfo:[notification userInfo]];
     }
+    else {
+        downloader.taskState = TaskStateDownloaded;
+    }
     [self postNotification:TDownloaderFinishNotification object:[notification object] userInfo:[notification userInfo]];
 }
 
@@ -103,30 +106,46 @@ static TDownloadManager *instance = nil;
     else if (downloader.taskState == TaskStateCancelling) {
         [self postNotification:TDownloaderDidCancelTaskNotification object:downloader userInfo:[notification userInfo]];
     }
+    else {
+        downloader.taskState = TaskStateError;
+    }
     [self postNotification:TDownloaderFailNotification object:downloader userInfo:[notification userInfo]];
 }
 
 #pragma mark - action
 
+- (BOOL)isExist:(Downloader *)download {
+//    return NO;
+    for (Downloader *dl in [_downloadQueue operations]) {
+        if ([download.url isEqual:dl.url]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)addDownloadTask:(Downloader *)download {
     
-    download.taskState = TaskStateWaiting;
-	NBLog(@"tasks count before adding: %d", [[_downloadQueue operations] count]);
-	[_downloadQueue addOperation:download];
-	NBLog(@"tasks count after adding: %d", [[_downloadQueue operations] count]);
-    
-    [self postNotification:TDownloaderWillStartTaskNotification object:download userInfo:nil];
+    if ([self isExist:download] == NO) {
+        download.taskState = TaskStateWaiting;
+        NBLog(@"tasks count before adding: %d", [[_downloadQueue operations] count]);
+        [_downloadQueue addOperation:download];
+        NBLog(@"tasks count after adding: %d", [[_downloadQueue operations] count]);
+        
+        [self postNotification:TDownloaderWillStartTaskNotification object:download userInfo:nil];
+    }
 }
 
 - (void)resumeDownloadTask:(Downloader *)download {
     
-    [download getReady];
-    download.taskState = TaskStateWaiting;
-	NBLog(@"tasks count before resuming: %d", [[_downloadQueue operations] count]);
-	[_downloadQueue addOperation:download];
-	NBLog(@"tasks count after resuming: %d", [[_downloadQueue operations] count]);
-    
-    [self postNotification:TDownloaderWillStartTaskNotification object:download userInfo:nil];
+    if ([self isExist:download] == NO) {
+        download.taskState = TaskStateWaiting;
+        NBLog(@"tasks count before resuming: %d", [[_downloadQueue operations] count]);
+        [_downloadQueue addOperation:download];
+        NBLog(@"tasks count after resuming: %d", [[_downloadQueue operations] count]);
+        
+        [self postNotification:TDownloaderWillStartTaskNotification object:download userInfo:nil];
+    }
 }
 
 - (void)pauseDownloadTask:(Downloader *)download {
@@ -135,7 +154,7 @@ static TDownloadManager *instance = nil;
     // 2. 接着设置taskstate为pause，这样可以让前端知道当前的状态
     // 解决思路: 由于Downloader不提供改变ready状态的外部接口，所以考虑以下两种解决方案
     // 方案1. 考虑重新初始化一个新的downloader进行深拷贝
-    // 方案2. 为Downloader添加reset供外部调用的接口，待测试是否会影响其他逻辑判断
+    // 方案2. 为Downloader添加reset供外部调用的接口，待测试是否会影响其他逻辑判断 (测试证明该方法不可行，必须重新初始化一个新的operation)
     
     download.taskState = TaskStatePausing;
     [download cancel];

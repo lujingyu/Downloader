@@ -47,6 +47,7 @@ typedef enum {
 @property (readwrite, nonatomic, strong) NSRecursiveLock *lock;
 @property (readwrite, nonatomic, strong) NSURLConnection *connection;
 @property (readwrite, nonatomic, strong) NSMutableURLRequest *request;
+@property (readwrite, nonatomic, retain) NSURL *url;
 @property (readwrite, nonatomic, strong) NSURLResponse *response;
 @property (readwrite, nonatomic, strong) NSError *error;
 @property (readwrite, nonatomic, strong) NSData *responseData;
@@ -252,6 +253,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 		 如果NO，初始化对应的request后，将缓存文件删除
 		 */
 		
+        self.url = url;
 		self.targetPath = tempPath;
 		self.lock = [[[NSRecursiveLock alloc] init] autorelease];
 		self.lock.name = kDownloadLockName;
@@ -268,6 +270,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 }
 
 - (void)dealloc {
+    self.url = nil;
 	self.obj = nil;
 	self.lock = nil;
 	self.connection = nil;
@@ -449,8 +452,11 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
     self.state = DownloaderOperationStateFinished;
 }
 
-- (void)getReady {
-    self.state = DownloaderOperationStateReady;
+- (Downloader *)getReady {    
+    Downloader *dl = [[[self class] alloc] initWithURL:self.request.URL tempPath:self.targetPath];
+    dl.totalBytes = self.totalBytes;
+    dl.totalBytesRead = self.totalBytesRead;
+    return [dl autorelease];
 }
 
 - (void)cancel {

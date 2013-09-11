@@ -51,12 +51,15 @@
 - (void)downloadWillStart:(NSNotification *)notification {
     [self viewOnBook:[notification object]];
 }
+
 - (void)downloadWillPause:(NSNotification *)notification {
     [self viewOnBook:[notification object]];
 }
+
 - (void)downloadWillCancel:(NSNotification *)notification {
     [self viewOnBook:[notification object]];
 }
+
 - (void)downloadDidCancel:(NSNotification *)notification {
     [self viewOnBook:[notification object]];
 }
@@ -109,38 +112,13 @@
 
 - (void)actionButton:(UIButton *)button {
 	int index = button.tag-1000;
-	Book *book = [_fakeDatasource objectAtIndex:index];
-    [self actionOnBook:book];
-//    [self handleBook:dl];
-//	
-////	typedef enum {
-////		taskStateNormal,
-////		taskStateDownloading,
-////		taskStatePause,
-////		taskStateResume,
-////		taskStateDownloaded,
-////		taskStateWaiting,
-////		taskStateError,
-////	} TaskState;
-//
-//	if ([dl isExecuting] == YES) {
-//		// do pause
-//		// 只有将NSOperation的isFinished置为YES时，其所在的队列NSOperationQueue才会释放当前operation，并执行下一个operation
-//		[dl cancel];
-//		
-//	}
-//	else if ([dl isPaused] == YES) {
-//		// do resume
-//		[dl resume];
-//	}
-//	else {
-//		[[TDownloadManager sharedInstance] addDownloadTask:dl];
-//	}
+    [self actionOnBookAtIndex:index];
 }
 
 #pragma mark - 点击触发时，根据当前状态执行不同的动作
 
-- (void)actionOnBook:(Book *)book {
+- (void)actionOnBookAtIndex:(NSInteger)index {
+    Book *book = [_fakeDatasource objectAtIndex:index];
     switch (book.taskState) {
         case TaskStateNormal: {
             // 添加到下载
@@ -154,7 +132,10 @@
             break;
         case TaskStatePausing: {
             // 恢复下载
-            [[TDownloadManager sharedInstance] resumeDownloadTask:book];
+            // 删除以前的operation, 然后初始化一个新的
+            Book *newBook = [book getReady];
+            [_fakeDatasource replaceObjectAtIndex:index withObject:newBook];
+            [[TDownloadManager sharedInstance] resumeDownloadTask:newBook];
         }
             break;
         case TaskStateWaiting: {
