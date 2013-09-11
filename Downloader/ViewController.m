@@ -35,6 +35,7 @@
 }
 
 - (void)addNotificationObserver {
+    
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
 	[center addObserver:self selector:@selector(downloadDidReceiveResponse:) name:TDownloaderReceiveResponseNotification object:nil];
@@ -46,6 +47,21 @@
 	[center addObserver:self selector:@selector(downloadWillPause:) name:TDownloaderWillPauseTaskNotification object:nil];
 	[center addObserver:self selector:@selector(downloadWillCancel:) name:TDownloaderWillCancelTaskNotification object:nil];
 	[center addObserver:self selector:@selector(downloadDidCancel:) name:TDownloaderDidCancelTaskNotification object:nil];
+}
+
+- (void)removeNotificationObserver {
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    [center removeObserver:self name:TDownloaderReceiveResponseNotification object:nil];
+    [center removeObserver:self name:TDownloaderReceiveDataNotification object:nil];
+    [center removeObserver:self name:TDownloaderFinishNotification object:nil];
+    [center removeObserver:self name:TDownloaderFailNotification object:nil];
+    
+    [center removeObserver:self name:TDownloaderWillStartTaskNotification object:nil];
+    [center removeObserver:self name:TDownloaderWillPauseTaskNotification object:nil];
+    [center removeObserver:self name:TDownloaderWillCancelTaskNotification object:nil];
+    [center removeObserver:self name:TDownloaderDidCancelTaskNotification object:nil];
 }
 
 - (void)downloadWillStart:(NSNotification *)notification {
