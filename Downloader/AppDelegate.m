@@ -4,7 +4,7 @@
 //
 //  Created by jingyu lu on 9/9/13.
 //  Copyright (c) 2013 jingyu lu. All rights reserved.
-//  git test
+//  
 
 #import "AppDelegate.h"
 

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TDownloadManager.h"
+#import "Book.h"
 
 @interface ViewController ()
 
@@ -35,45 +36,45 @@
 
 - (void)addNotificationObserver {
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-	[center addObserver:self selector:@selector(downloadDidReceiveResponse:) name:NotificationDownloadDidReceiveResponse object:nil];
-	[center addObserver:self selector:@selector(downloadDidReceiveData:) name:NotificationDownloadDidReceiveData object:nil];
-	[center addObserver:self selector:@selector(downloadDidFinish:) name:NotificationDownloadDidFinish object:nil];
-	[center addObserver:self selector:@selector(downloadDidFail:) name:NotificationDownloadDidFail object:nil];
+    
+	[center addObserver:self selector:@selector(downloadDidReceiveResponse:) name:TDownloaderReceiveResponseNotification object:nil];
+	[center addObserver:self selector:@selector(downloadDidReceiveData:) name:TDownloaderReceiveDataNotification object:nil];
+	[center addObserver:self selector:@selector(downloadDidFinish:) name:TDownloaderFinishNotification object:nil];
+	[center addObserver:self selector:@selector(downloadDidFail:) name:TDownloaderFailNotification object:nil];
+    
+    [center addObserver:self selector:@selector(downloadWillStart:) name:TDownloaderWillStartTaskNotification object:nil];
+	[center addObserver:self selector:@selector(downloadWillPause:) name:TDownloaderWillPauseTaskNotification object:nil];
+	[center addObserver:self selector:@selector(downloadWillCancel:) name:TDownloaderWillCancelTaskNotification object:nil];
+	[center addObserver:self selector:@selector(downloadDidCancel:) name:TDownloaderDidCancelTaskNotification object:nil];
+}
+
+- (void)downloadWillStart:(NSNotification *)notification {
+    [self viewOnBook:[notification object]];
+}
+- (void)downloadWillPause:(NSNotification *)notification {
+    [self viewOnBook:[notification object]];
+}
+- (void)downloadWillCancel:(NSNotification *)notification {
+    [self viewOnBook:[notification object]];
+}
+- (void)downloadDidCancel:(NSNotification *)notification {
+    [self viewOnBook:[notification object]];
 }
 
 - (void)downloadDidReceiveResponse:(NSNotification *)notification {
-	Downloader *dl = [notification object];
-	int index = [_fakeDatasource indexOfObject:dl];
-	UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
-	[btn setTitle:@"Waiting" forState:UIControlStateNormal];
+    [self viewOnBook:[notification object]];
 }
 
 - (void)downloadDidReceiveData:(NSNotification *)notification {
-	Downloader *dl = [notification object];
-	int index = [_fakeDatasource indexOfObject:dl];
-	UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
-	
-	NSDictionary *userInfo = [notification userInfo];
-	unsigned long long totalBytesRead = [[userInfo objectForKey:key_download_total_bytes_read] unsignedLongLongValue];
-	unsigned long long totalBytes = [[userInfo objectForKey:key_download_total_bytes] unsignedLongLongValue];
-	
-	CGFloat progress = (double)totalBytesRead/(double)totalBytes;
-	NSString *title = [NSString stringWithFormat:@"%1.f%%", progress*100];	
-	[btn setTitle:title forState:UIControlStateNormal];
+    [self viewOnBook:[notification object]];
 }
 
 - (void)downloadDidFinish:(NSNotification *)notification {
-	Downloader *dl = [notification object];
-	int index = [_fakeDatasource indexOfObject:dl];
-	UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
-	[btn setTitle:@"Done" forState:UIControlStateNormal];
+    [self viewOnBook:[notification object]];
 }
 
 - (void)downloadDidFail:(NSNotification *)notification {
-	Downloader *dl = [notification object];
-	int index = [_fakeDatasource indexOfObject:dl];
-	UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
-	[btn setTitle:@"Failed" forState:UIControlStateNormal];
+    [self viewOnBook:[notification object]];
 }
 
 - (void)viewDidLoad
@@ -84,12 +85,12 @@
 	[self addNotificationObserver];
 	
 	_fakeDatasource = [[NSMutableArray alloc] initWithCapacity:0];
-	NSString *str = @"http://www.baidupcs.com/file/e805857e0882c2be6706b29da2f19823?xcode=2c88a05b4c272c0bee366fb73b755c799bd3780af21cada6&fid=134615754-250528-4191677825&time=1378706578&sign=FDTAXER-DCb740ccc5511e5e8fedcff06b081203-s993xZzV0S3znBqgjaSXG%2BjplWQ%3D&to=wb&fm=N,B,M&expires=8h&rt=pr&r=304146050&logid=856051358";
+	NSString *str = @"http://dl_dir.qq.com/music/clntupate/QQMusicForMacV1.2.0.dmg";
 	for (int i = 0; i < 10; i++) {
 		NSString *path = [self pathForTemporaryFileWithPrefix:[NSString stringWithFormat:@"path%d", i]];
-		Downloader *dl = [[Downloader alloc] initWithURL:[NSURL URLWithString:str] tempPath:path];
-		[_fakeDatasource addObject:dl];
-		[dl release];
+		Book *book = [[Book alloc] initWithURL:[NSURL URLWithString:str] tempPath:path];
+		[_fakeDatasource addObject:book];
+		[book release];
 	}
 	[self drawUI];
 }
@@ -108,31 +109,126 @@
 
 - (void)actionButton:(UIButton *)button {
 	int index = button.tag-1000;
-	Downloader *dl = [_fakeDatasource objectAtIndex:index];
-	
-//	typedef enum {
-//		taskStateNormal,
-//		taskStateDownloading,
-//		taskStatePause,
-//		taskStateResume,
-//		taskStateDownloaded,
-//		taskStateWaiting,
-//		taskStateError,
-//	} TaskState;
+	Book *book = [_fakeDatasource objectAtIndex:index];
+    [self actionOnBook:book];
+//    [self handleBook:dl];
+//	
+////	typedef enum {
+////		taskStateNormal,
+////		taskStateDownloading,
+////		taskStatePause,
+////		taskStateResume,
+////		taskStateDownloaded,
+////		taskStateWaiting,
+////		taskStateError,
+////	} TaskState;
+//
+//	if ([dl isExecuting] == YES) {
+//		// do pause
+//		// 只有将NSOperation的isFinished置为YES时，其所在的队列NSOperationQueue才会释放当前operation，并执行下一个operation
+//		[dl cancel];
+//		
+//	}
+//	else if ([dl isPaused] == YES) {
+//		// do resume
+//		[dl resume];
+//	}
+//	else {
+//		[[TDownloadManager sharedInstance] addDownloadTask:dl];
+//	}
+}
 
-	if ([dl isExecuting] == YES) {
-		// do pause
-		// 只有将NSOperation的isFinished置为YES时，其所在的队列NSOperationQueue才会释放当前operation，并执行下一个operation
-		[dl cancel];
-		
-	}
-	else if ([dl isPaused] == YES) {
-		// do resume
-		[dl resume];
-	}
-	else {
-		[[TDownloadManager sharedInstance] addDownloadTask:dl];
-	}
+#pragma mark - 点击触发时，根据当前状态执行不同的动作
+
+- (void)actionOnBook:(Book *)book {
+    switch (book.taskState) {
+        case TaskStateNormal: {
+            // 添加到下载
+            [[TDownloadManager sharedInstance] addDownloadTask:book];
+        }
+            break;
+        case TaskStateDownloading: {
+            // 暂停
+            [[TDownloadManager sharedInstance] pauseDownloadTask:book];
+        }
+            break;
+        case TaskStatePausing: {
+            // 恢复下载
+            [[TDownloadManager sharedInstance] resumeDownloadTask:book];
+        }
+            break;
+        case TaskStateWaiting: {
+            // 暂停
+            [[TDownloadManager sharedInstance] pauseDownloadTask:book];
+        }
+            break;
+        case TaskStateCancelling: {
+            // 上一次状态为取消
+            [[TDownloadManager sharedInstance] addDownloadTask:book];
+        }
+            break;
+        case TaskStateDownloaded: {
+            // 跳转详情
+            NBLog(@"go to detail");
+        }
+            break;
+        case TaskStateError: {
+            // 添加到下载
+            [[TDownloadManager sharedInstance] addDownloadTask:book];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - 根据当前的状态显示视图内容
+
+- (void)viewOnBook:(Book *)book {
+    NSInteger index = [_fakeDatasource indexOfObject:book];
+    UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
+
+    switch (book.taskState) {
+        case TaskStateNormal: {
+            // 普通状态
+            [btn setTitle:@"Normal" forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStateDownloading: {
+            // 正在下载 显示进度条
+            CGFloat progress = (double)book.totalBytesRead/(double)book.totalBytes;
+            NSString *title = [NSString stringWithFormat:@"%1.f%%", progress*100];
+            [btn setTitle:title forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStatePausing: {
+            // 暂停 显示暂停图标
+            [btn setTitle:@"Pause" forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStateWaiting: {
+            // 等待 显示waiting
+            [btn setTitle:@"Waiting" forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStateCancelling: {
+            // 取消下载 显示成普通状态，或者删除?
+            [btn setTitle:@"Deleting" forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStateDownloaded: {
+            // 下载完成 显示完成的图标
+            [btn setTitle:@"Done" forState:UIControlStateNormal];
+        }
+            break;
+        case TaskStateError: {
+            // 出错 显示暂停图标代替?
+            [btn setTitle:@"Error" forState:UIControlStateNormal];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning

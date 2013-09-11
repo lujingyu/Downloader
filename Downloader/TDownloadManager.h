@@ -7,26 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Downloader.h"
+#import "Book.h"
 
 extern NSString * const TDownloaderReceiveResponseNotification;
 extern NSString * const TDownloaderReceiveDataNotification;
 extern NSString * const TDownloaderFinishNotification;
 extern NSString * const TDownloaderFailNotification;
 
-extern NSString * const TDownloaderWillStartNotification;
-extern NSString * const TDownloaderPauseNotification;
+extern NSString * const TDownloaderWillStartTaskNotification;
+extern NSString * const TDownloaderWillPauseTaskNotification;
+extern NSString * const TDownloaderWillCancelTaskNotification;
+extern NSString * const TDownloaderDidCancelTaskNotification;
+
 
 
 
 
 @interface TDownloadManager : NSObject {
 	
-	NSOperationQueue   *_downloadQueue;
+	NSOperationQueue      *_downloadQueue;
 }
 
 + (TDownloadManager *)sharedInstance;
 
 - (void)addDownloadTask:(Downloader *)download;
+- (void)pauseDownloadTask:(Downloader *)download;
+- (void)resumeDownloadTask:(Downloader *)download;
+- (void)cancelDownloadTask:(Downloader *)download;
 
 @end

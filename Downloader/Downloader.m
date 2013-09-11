@@ -121,6 +121,9 @@ static inline NSString *keyPathFromOperationState(DownloaderOperationState state
 }
 
 static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fromState, DownloaderOperationState toState, BOOL isCancelled) {
+    if (fromState == DownloaderOperationStateFinished && toState == DownloaderOperationStateReady) {
+        return YES;
+    }
     switch (fromState) {
         case DownloaderOperationStateReady:
             switch (toState) {
@@ -446,9 +449,8 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
     self.state = DownloaderOperationStateFinished;
 }
 
-- (void)waiting {
-	[self pause];
-	self.state = DownloaderOperationStateReady;
+- (void)getReady {
+    self.state = DownloaderOperationStateReady;
 }
 
 - (void)cancel {
