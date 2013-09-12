@@ -155,7 +155,7 @@ static TDownloadManager *instance = nil;
 }
 
 - (void)addDownloadTask:(DownloadTask *)task {
-    
+        
     task.taskState = TaskStateWaiting;
     Downloader *downloader = [self downloaderWithTask:task];
     downloader.obj = task;
@@ -168,7 +168,7 @@ static TDownloadManager *instance = nil;
 
 - (void)resumeDownloadTask:(DownloadTask *)task {
 
-    task.taskState = TaskStateDownloading;
+    task.taskState = TaskStateWaiting;
     Downloader *downloader = [self downloaderWithTask:task];
     downloader.obj = task;
     NBLog(@"tasks count before resuming: %d", [[_downloadQueue operations] count]);

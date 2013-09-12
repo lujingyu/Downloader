@@ -104,7 +104,7 @@
 	[self addNotificationObserver];
 	
 	_fakeDatasource = [[NSMutableArray alloc] initWithCapacity:0];
-	NSString *str = @"http://bj.baidupcs.com/file/a287b249516dbf54e95dc8e3aeb8d662?xcode=d9bd4fc1356a43af85a9bdb1338ebbfdeb53c44de33a1e1c&fid=134615754-250528-2515246562&time=1378953880&sign=FDTAXER-DCb740ccc5511e5e8fedcff06b081203-qFJ8GEU1pjgmKi6X1NN7qY6T83U%3D&to=bb&fm=N,B,M,mn&expires=8h&rt=pr&r=195737111&logid=3088684423";
+	NSString *str = @"http://www.baidupcs.com/file/4ac0a6306b91d79242d87779d70bbcca?xcode=12572e84762b415a949ea0f174923179fab58ff84d2bbb55&fid=134615754-250528-3228722186&time=1378956891&sign=FDTAXER-DCb740ccc5511e5e8fedcff06b081203-NhJy2MEjF5Gfqiqaqo2afXQdl4M%3D&to=wb&fm=N,B,M,mn&expires=8h&rt=pr&r=683546765&logid=1862802409";
 	for (int i = 0; i < 10; i++) {
         Book *book = [[Book alloc] init];
         book.bookID = [NSString stringWithFormat:@"%d", i];

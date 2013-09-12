@@ -20,13 +20,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Downloader/Downloader.m"
-         timestampString = "400649209.04216"
+         filePath = "Downloader/TDownloadManager.m"
+         timestampString = "400650119.247984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "666"
-         endingLineNumber = "666"
-         landmarkName = "-connection:didFailWithError:"
+         startingLineNumber = "157"
+         endingLineNumber = "157"
+         landmarkName = "-addDownloadTask:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
