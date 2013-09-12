@@ -47,7 +47,7 @@ typedef enum {
 @property (readwrite, nonatomic, strong) NSRecursiveLock *lock;
 @property (readwrite, nonatomic, strong) NSURLConnection *connection;
 @property (readwrite, nonatomic, strong) NSMutableURLRequest *request;
-@property (readwrite, nonatomic, retain) NSURL *url;
+@property (readwrite, nonatomic, retain) NSString *url;
 @property (readwrite, nonatomic, strong) NSURLResponse *response;
 @property (readwrite, nonatomic, strong) NSError *error;
 @property (readwrite, nonatomic, strong) NSData *responseData;
@@ -174,7 +174,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
         // ensure all cache directories are there (needed only once)
         NSError *error = nil;
         if(![[NSFileManager new] createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
-            NBLog(@"Failed to create cache directory at %@", cacheFolder);
+            //NBLog(@"Failed to create cache directory at %@", cacheFolder);
         }
     });
     return cacheFolder;
@@ -238,11 +238,11 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 
 #pragma mark - life cycle
 
-+ (id)downloaderWithURL:(NSURL *)url tempPath:(NSString *)tempPath {
++ (id)downloaderWithURL:(NSString *)url tempPath:(NSString *)tempPath {
 	return [[[self alloc] initWithURL:url tempPath:tempPath] autorelease];
 }
 
-- (id)initWithURL:(NSURL *)url tempPath:(NSString *)tempPath {
+- (id)initWithURL:(NSString *)url tempPath:(NSString *)tempPath {
 	if (self = [super init]) {
 		
 		/**
@@ -260,7 +260,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 		self.runLoopModes = [NSSet setWithObject:NSRunLoopCommonModes];
 		self.state = DownloaderOperationStateReady;
 		
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
 		[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
 		self.request = request;
 		
@@ -452,13 +452,6 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
     self.state = DownloaderOperationStateFinished;
 }
 
-- (Downloader *)getReady {    
-    Downloader *dl = [[[self class] alloc] initWithURL:self.request.URL tempPath:self.targetPath];
-    dl.totalBytes = self.totalBytes;
-    dl.totalBytesRead = self.totalBytesRead;
-    return [dl autorelease];
-}
-
 - (void)cancel {
     [self.lock lock];
     if (![self isFinished] && ![self isCancelled]) {
@@ -517,7 +510,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
         for (NSString *key in sentHeaders) {
             [headers appendFormat:@"%@: %@\n", key, [sentHeaders objectForKey:key]];
         }
-		NBLog(@"%@", headers);
+		//NBLog(@"%@", headers);
     }
     
     if (inRedirectResponse) {
@@ -555,7 +548,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
             [[challenge sender] useCredential:newCredential forAuthenticationChallenge:challenge];
         } else {
             [[challenge sender] cancelAuthenticationChallenge:challenge];
-			NBLog(@"Authentication Failed");
+			//NBLog(@"Authentication Failed");
         }
     }
 }
@@ -564,8 +557,8 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 	self.response = response;
 	
 	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	NBLog(@"%d", httpResponse.statusCode);
-	NBLog(@"%@", httpResponse.allHeaderFields);
+	//NBLog(@"%d", httpResponse.statusCode);
+	//NBLog(@"%@", httpResponse.allHeaderFields);
 	
 	if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
 		[self.outputStream open];

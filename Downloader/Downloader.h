@@ -14,16 +14,6 @@
 #define key_download_total_bytes         @"key_download_total_bytes"
 #define key_download_error               @"key_download_error"
 
-//typedef enum {
-//	TaskStateNormal = 0,
-//	TaskStateDownloading,
-//	TaskStatePausing,
-//    TaskStateWaiting,
-//    TaskStateCancelling,
-//	TaskStateDownloaded,
-//    TaskStateError,
-//} TaskState;
-
 @protocol DownloaderNotifyDelegate <NSObject>
 @optional
 - (void)downloadDidReceiveResponse:(NSNotification *)notification;
@@ -47,19 +37,18 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 
 @interface Downloader : NSOperation <NSURLConnectionDelegate> 
 
-@property (nonatomic, retain) NSObject  *obj; // 用于传递一些本地参数，Downloader类的内部不做调用
+@property (nonatomic, assign) NSObject  *obj; // 用于传递一些本地参数，Downloader类的内部不做调用
 
 @property (readonly, nonatomic, assign) long long totalBytesRead;
 @property (readonly, nonatomic, assign) long long totalBytes;
-//@property (nonatomic, assign) TaskState taskState; // 用于设置downloader正在进行的状态，内部不做调用
-@property (readonly, nonatomic, retain) NSURL *url;
+@property (readonly, nonatomic, retain) NSString *url;
 
-+ (id)downloaderWithURL:(NSURL *)url tempPath:(NSString *)tempPath;
++ (id)downloaderWithURL:(NSString *)url tempPath:(NSString *)tempPath;
 /**
  @param url 下载链接地址
  @param tempPath 本地文件缓冲路径(一直到文件名)
  */
-- (id)initWithURL:(NSURL *)url tempPath:(NSString *)tempPath;
+- (id)initWithURL:(NSString *)url tempPath:(NSString *)tempPath;
 
 - (void)start;
 - (void)pause;
@@ -67,9 +56,6 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 - (BOOL)isReady; // isWaiting
 - (void)resume;
 - (void)cancel;
-// added by ljy 9/11/2013
-// 必要的时候需要子类重载
-//- (Downloader *)getReady;
 
 #if NS_BLOCKS_AVAILABLE
 @property (nonatomic, copy) DownloaderDidReceiveResponseBlock receiveResponseBlock;

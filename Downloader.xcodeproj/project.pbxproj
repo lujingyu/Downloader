@@ -403,10 +403,14 @@
 		F416FE9417DD7DC2000E0FD1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jingyu Lu (CXKMSF9F4R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jingyu Lu (CXKMSF9F4R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Downloader/Downloader-Prefix.pch";
 				INFOPLIST_FILE = "Downloader/Downloader-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0F7D3D5C-5C0F-46B2-A6B0-0B762DECA02F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F7D3D5C-5C0F-46B2-A6B0-0B762DECA02F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -414,10 +418,14 @@
 		F416FE9517DD7DC2000E0FD1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jingyu Lu (CXKMSF9F4R)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jingyu Lu (CXKMSF9F4R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Downloader/Downloader-Prefix.pch";
 				INFOPLIST_FILE = "Downloader/Downloader-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0F7D3D5C-5C0F-46B2-A6B0-0B762DECA02F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F7D3D5C-5C0F-46B2-A6B0-0B762DECA02F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

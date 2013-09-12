@@ -16,24 +16,6 @@
 
 @implementation ViewController
 
-- (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix{
-	//    NSString    *result;
-    CFUUIDRef    uuid;
-    CFStringRef  uuidStr;
-    uuid = CFUUIDCreate(NULL);
-    
-    uuidStr = CFUUIDCreateString(NULL, uuid);
-    
-	//    result  = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", prefix, uuidStr]];
-	//    NBLog(@"\npathForTemporaryFileWithPrefix:\n%@",result);
-    CFRelease(uuidStr);
-    CFRelease(uuid);
-    
-	NSString *defaultPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) lastObject] stringByAppendingPathComponent:prefix];
-	
-    return defaultPath;
-}
-
 - (void)addNotificationObserver {
     
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
