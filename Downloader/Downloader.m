@@ -646,7 +646,7 @@ static inline BOOL downloaderStateTransitionIsValid(DownloaderOperationState fro
 	}
 	else {
 		[self.outputStream close];
-		[self pause];
+		[self finish];
 		self.error = [NSError errorWithDomain:@"httpResponse.statusCode" code:httpResponse.statusCode userInfo:nil];
 		if (_failWithErrorBlock) {
 			_failWithErrorBlock(connection, self.error);

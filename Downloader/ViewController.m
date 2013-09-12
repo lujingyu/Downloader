@@ -104,12 +104,14 @@
 	[self addNotificationObserver];
 	
 	_fakeDatasource = [[NSMutableArray alloc] initWithCapacity:0];
-	NSString *str = @"http://dl_dir.qq.com/music/clntupate/QQMusicForMacV1.2.0.dmg";
+	NSString *str = @"http://bj.baidupcs.com/file/a287b249516dbf54e95dc8e3aeb8d662?xcode=d9bd4fc1356a43af85a9bdb1338ebbfdeb53c44de33a1e1c&fid=134615754-250528-2515246562&time=1378953880&sign=FDTAXER-DCb740ccc5511e5e8fedcff06b081203-qFJ8GEU1pjgmKi6X1NN7qY6T83U%3D&to=bb&fm=N,B,M,mn&expires=8h&rt=pr&r=195737111&logid=3088684423";
 	for (int i = 0; i < 10; i++) {
-		NSString *path = [self pathForTemporaryFileWithPrefix:[NSString stringWithFormat:@"path%d", i]];
-		Book *book = [[Book alloc] initWithURL:[NSURL URLWithString:str] tempPath:path];
-		[_fakeDatasource addObject:book];
-		[book release];
+        Book *book = [[Book alloc] init];
+        book.bookID = [NSString stringWithFormat:@"%d", i];
+        book.bookName = [NSString stringWithFormat:@"name%d", i];
+        book.downloadURL = str;
+        [_fakeDatasource addObject:book];
+        [book release];
 	}
 	[self drawUI];
 }
@@ -131,6 +133,17 @@
     [self actionOnBookAtIndex:index];
 }
 
+- (NSInteger)indexOfBook:(Book *)book {
+    __block NSInteger index = NSNotFound;
+    [_fakeDatasource enumerateObjectsUsingBlock:^(Book *obj, NSUInteger idx, BOOL *stop) {
+        if ([book.bookID isEqualToString:obj.bookID]) {
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    return index;
+}
+
 #pragma mark - 点击触发时，根据当前状态执行不同的动作
 
 - (void)actionOnBookAtIndex:(NSInteger)index {
@@ -148,10 +161,7 @@
             break;
         case TaskStatePausing: {
             // 恢复下载
-            // 删除以前的operation, 然后初始化一个新的
-            Book *newBook = [book getReady];
-            [_fakeDatasource replaceObjectAtIndex:index withObject:newBook];
-            [[TDownloadManager sharedInstance] resumeDownloadTask:newBook];
+            [[TDownloadManager sharedInstance] resumeDownloadTask:book];
         }
             break;
         case TaskStateWaiting: {
@@ -182,7 +192,7 @@
 #pragma mark - 根据当前的状态显示视图内容
 
 - (void)viewOnBook:(Book *)book {
-    NSInteger index = [_fakeDatasource indexOfObject:book];
+    NSInteger index = [self indexOfBook:book];
     UIButton *btn = (UIButton *)[self.view viewWithTag:index+1000];
 
     switch (book.taskState) {

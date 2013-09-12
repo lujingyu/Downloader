@@ -6,13 +6,10 @@
 //  Copyright (c) 2013年 jingyu lu. All rights reserved.
 //
 
-#import "Downloader.h"
+#import "DownloadTask.h"
 
 
-@interface Book : Downloader
+@interface Book : DownloadTask
 @property (nonatomic, retain) NSString *bookID;
 @property (nonatomic, retain) NSString *bookName;
-
-- (Book *)getReady;
-
 @end

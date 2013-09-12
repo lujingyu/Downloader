@@ -14,15 +14,15 @@
 #define key_download_total_bytes         @"key_download_total_bytes"
 #define key_download_error               @"key_download_error"
 
-typedef enum {
-	TaskStateNormal = 0,
-	TaskStateDownloading,
-	TaskStatePausing,
-    TaskStateWaiting,
-    TaskStateCancelling,
-	TaskStateDownloaded,
-    TaskStateError,
-} TaskState;
+//typedef enum {
+//	TaskStateNormal = 0,
+//	TaskStateDownloading,
+//	TaskStatePausing,
+//    TaskStateWaiting,
+//    TaskStateCancelling,
+//	TaskStateDownloaded,
+//    TaskStateError,
+//} TaskState;
 
 @protocol DownloaderNotifyDelegate <NSObject>
 @optional
@@ -51,7 +51,7 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 
 @property (readonly, nonatomic, assign) long long totalBytesRead;
 @property (readonly, nonatomic, assign) long long totalBytes;
-@property (nonatomic, assign) TaskState taskState; // 用于设置downloader正在进行的状态，内部不做调用
+//@property (nonatomic, assign) TaskState taskState; // 用于设置downloader正在进行的状态，内部不做调用
 @property (readonly, nonatomic, retain) NSURL *url;
 
 + (id)downloaderWithURL:(NSURL *)url tempPath:(NSString *)tempPath;
@@ -69,7 +69,7 @@ typedef void (^DownloaderDidFailWithErrorBlock)(NSURLConnection *connection, NSE
 - (void)cancel;
 // added by ljy 9/11/2013
 // 必要的时候需要子类重载
-- (Downloader *)getReady;
+//- (Downloader *)getReady;
 
 #if NS_BLOCKS_AVAILABLE
 @property (nonatomic, copy) DownloaderDidReceiveResponseBlock receiveResponseBlock;

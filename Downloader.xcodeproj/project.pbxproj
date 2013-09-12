@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D3456C8A17E01008008DD263 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C8917E01008008DD263 /* Book.m */; };
+		D3456C8F17E15325008DD263 /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C8E17E15325008DD263 /* DownloadTask.m */; };
 		F416FE5F17DD7DC2000E0FD1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE5E17DD7DC2000E0FD1 /* UIKit.framework */; };
 		F416FE6117DD7DC2000E0FD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE6017DD7DC2000E0FD1 /* Foundation.framework */; };
 		F416FE6317DD7DC2000E0FD1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE6217DD7DC2000E0FD1 /* CoreGraphics.framework */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		D3456C8817E01008008DD263 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		D3456C8917E01008008DD263 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		D3456C8D17E15325008DD263 /* DownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadTask.h; sourceTree = "<group>"; };
+		D3456C8E17E15325008DD263 /* DownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadTask.m; sourceTree = "<group>"; };
 		F416FE5B17DD7DC2000E0FD1 /* Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Downloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F416FE5E17DD7DC2000E0FD1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F416FE6017DD7DC2000E0FD1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -132,6 +135,8 @@
 				F416FE9A17DD7E08000E0FD1 /* TDownloadManager.m */,
 				F416FE9C17DD9433000E0FD1 /* Downloader.h */,
 				F416FE9D17DD9433000E0FD1 /* Downloader.m */,
+				D3456C8D17E15325008DD263 /* DownloadTask.h */,
+				D3456C8E17E15325008DD263 /* DownloadTask.m */,
 				D3456C8817E01008008DD263 /* Book.h */,
 				D3456C8917E01008008DD263 /* Book.m */,
 				F416FE7617DD7DC2000E0FD1 /* ViewController.h */,
@@ -291,6 +296,7 @@
 				F416FE9B17DD7E08000E0FD1 /* TDownloadManager.m in Sources */,
 				F416FE9E17DD9433000E0FD1 /* Downloader.m in Sources */,
 				D3456C8A17E01008008DD263 /* Book.m in Sources */,
+				D3456C8F17E15325008DD263 /* DownloadTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
