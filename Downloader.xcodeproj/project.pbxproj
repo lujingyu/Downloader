@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D3456C8A17E01008008DD263 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C8917E01008008DD263 /* Book.m */; };
-		D3456C8F17E15325008DD263 /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C8E17E15325008DD263 /* DownloadTask.m */; };
+		D3456C9917E1A2A1008DD263 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C9217E1A2A1008DD263 /* Book.m */; };
+		D3456C9A17E1A2A1008DD263 /* Downloader.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C9417E1A2A1008DD263 /* Downloader.m */; };
+		D3456C9B17E1A2A1008DD263 /* DownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C9617E1A2A1008DD263 /* DownloadTask.m */; };
+		D3456C9C17E1A2A1008DD263 /* TDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D3456C9817E1A2A1008DD263 /* TDownloadManager.m */; };
 		F416FE5F17DD7DC2000E0FD1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE5E17DD7DC2000E0FD1 /* UIKit.framework */; };
 		F416FE6117DD7DC2000E0FD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE6017DD7DC2000E0FD1 /* Foundation.framework */; };
 		F416FE6317DD7DC2000E0FD1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE6217DD7DC2000E0FD1 /* CoreGraphics.framework */; };
@@ -25,8 +27,6 @@
 		F416FE8517DD7DC2000E0FD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F416FE6017DD7DC2000E0FD1 /* Foundation.framework */; };
 		F416FE8D17DD7DC2000E0FD1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F416FE8B17DD7DC2000E0FD1 /* InfoPlist.strings */; };
 		F416FE9017DD7DC2000E0FD1 /* DownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F416FE8F17DD7DC2000E0FD1 /* DownloaderTests.m */; };
-		F416FE9B17DD7E08000E0FD1 /* TDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F416FE9A17DD7E08000E0FD1 /* TDownloadManager.m */; };
-		F416FE9E17DD9433000E0FD1 /* Downloader.m in Sources */ = {isa = PBXBuildFile; fileRef = F416FE9D17DD9433000E0FD1 /* Downloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,10 +40,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D3456C8817E01008008DD263 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		D3456C8917E01008008DD263 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		D3456C8D17E15325008DD263 /* DownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadTask.h; sourceTree = "<group>"; };
-		D3456C8E17E15325008DD263 /* DownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadTask.m; sourceTree = "<group>"; };
+		D3456C9117E1A2A1008DD263 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		D3456C9217E1A2A1008DD263 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		D3456C9317E1A2A1008DD263 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
+		D3456C9417E1A2A1008DD263 /* Downloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Downloader.m; sourceTree = "<group>"; };
+		D3456C9517E1A2A1008DD263 /* DownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadTask.h; sourceTree = "<group>"; };
+		D3456C9617E1A2A1008DD263 /* DownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadTask.m; sourceTree = "<group>"; };
+		D3456C9717E1A2A1008DD263 /* TDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDownloadManager.h; sourceTree = "<group>"; };
+		D3456C9817E1A2A1008DD263 /* TDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDownloadManager.m; sourceTree = "<group>"; };
 		F416FE5B17DD7DC2000E0FD1 /* Downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Downloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F416FE5E17DD7DC2000E0FD1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F416FE6017DD7DC2000E0FD1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,10 +70,6 @@
 		F416FE8C17DD7DC2000E0FD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F416FE8E17DD7DC2000E0FD1 /* DownloaderTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloaderTests.h; sourceTree = "<group>"; };
 		F416FE8F17DD7DC2000E0FD1 /* DownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloaderTests.m; sourceTree = "<group>"; };
-		F416FE9917DD7E08000E0FD1 /* TDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDownloadManager.h; sourceTree = "<group>"; };
-		F416FE9A17DD7E08000E0FD1 /* TDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDownloadManager.m; sourceTree = "<group>"; };
-		F416FE9C17DD9433000E0FD1 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
-		F416FE9D17DD9433000E0FD1 /* Downloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Downloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +96,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D3456C9017E1A2A1008DD263 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				D3456C9117E1A2A1008DD263 /* Book.h */,
+				D3456C9217E1A2A1008DD263 /* Book.m */,
+				D3456C9317E1A2A1008DD263 /* Downloader.h */,
+				D3456C9417E1A2A1008DD263 /* Downloader.m */,
+				D3456C9517E1A2A1008DD263 /* DownloadTask.h */,
+				D3456C9617E1A2A1008DD263 /* DownloadTask.m */,
+				D3456C9717E1A2A1008DD263 /* TDownloadManager.h */,
+				D3456C9817E1A2A1008DD263 /* TDownloadManager.m */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
 		F416FE5217DD7DC1000E0FD1 = {
 			isa = PBXGroup;
 			children = (
@@ -129,16 +144,9 @@
 		F416FE6417DD7DC2000E0FD1 /* Downloader */ = {
 			isa = PBXGroup;
 			children = (
+				D3456C9017E1A2A1008DD263 /* Class */,
 				F416FE6D17DD7DC2000E0FD1 /* AppDelegate.h */,
 				F416FE6E17DD7DC2000E0FD1 /* AppDelegate.m */,
-				F416FE9917DD7E08000E0FD1 /* TDownloadManager.h */,
-				F416FE9A17DD7E08000E0FD1 /* TDownloadManager.m */,
-				F416FE9C17DD9433000E0FD1 /* Downloader.h */,
-				F416FE9D17DD9433000E0FD1 /* Downloader.m */,
-				D3456C8D17E15325008DD263 /* DownloadTask.h */,
-				D3456C8E17E15325008DD263 /* DownloadTask.m */,
-				D3456C8817E01008008DD263 /* Book.h */,
-				D3456C8917E01008008DD263 /* Book.m */,
 				F416FE7617DD7DC2000E0FD1 /* ViewController.h */,
 				F416FE7717DD7DC2000E0FD1 /* ViewController.m */,
 				F416FE7917DD7DC2000E0FD1 /* ViewController.xib */,
@@ -293,10 +301,10 @@
 				F416FE6B17DD7DC2000E0FD1 /* main.m in Sources */,
 				F416FE6F17DD7DC2000E0FD1 /* AppDelegate.m in Sources */,
 				F416FE7817DD7DC2000E0FD1 /* ViewController.m in Sources */,
-				F416FE9B17DD7E08000E0FD1 /* TDownloadManager.m in Sources */,
-				F416FE9E17DD9433000E0FD1 /* Downloader.m in Sources */,
-				D3456C8A17E01008008DD263 /* Book.m in Sources */,
-				D3456C8F17E15325008DD263 /* DownloadTask.m in Sources */,
+				D3456C9917E1A2A1008DD263 /* Book.m in Sources */,
+				D3456C9A17E1A2A1008DD263 /* Downloader.m in Sources */,
+				D3456C9B17E1A2A1008DD263 /* DownloadTask.m in Sources */,
+				D3456C9C17E1A2A1008DD263 /* TDownloadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
